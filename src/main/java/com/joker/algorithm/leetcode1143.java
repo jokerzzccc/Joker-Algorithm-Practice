@@ -27,7 +27,7 @@ public class leetcode1143 {
     }
 
     /**
-     * 自底向上：先算两个字符串最短的子串的 LCS
+     * 自底向上：从前到后 LCS
      */
     private static class Solution02 {
 
@@ -62,7 +62,7 @@ public class leetcode1143 {
     }
 
     /**
-     * 自顶向下：先算两个字符串最长的子串的 LCS
+     * 自顶向下：从后到前 LCS
      */
     private static class Solution01 {
 
