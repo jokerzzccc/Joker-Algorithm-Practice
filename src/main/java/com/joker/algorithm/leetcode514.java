@@ -55,7 +55,9 @@ public class leetcode514 {
 
             // 圆盘指针最初指向 12 点钟方向，
             // 从第一个字符开始输入 key
-            return dp(ring, 0, key, 0);
+            int dp = dp(ring, 0, key, 0);
+            Arrays.stream(memo).forEach(row -> System.out.println(Arrays.toString(row)));
+            return dp;
         }
 
         /**
