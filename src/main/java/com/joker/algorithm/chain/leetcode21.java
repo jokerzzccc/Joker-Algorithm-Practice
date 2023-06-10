@@ -1,4 +1,4 @@
-package com.joker.algorithm;
+package com.joker.algorithm.chain;
 
 import com.joker.algorithm.chain.ListNode;
 
