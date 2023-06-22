@@ -1,112 +1,81 @@
 package com.joker.algorithm.array;
 
-import java.util.Arrays;
+import java.util.PriorityQueue;
 import java.util.Random;
 
 /**
  * <p>
- * 排序数组
+ * 数组中的第K个最大元素
  * </p>
  *
  * @author admin
- * @date 2023/6/21
+ * @date 2023/6/22
  */
-public class leetcode912 {
+public class leetcode215 {
 
     public static void main(String[] args) {
-        int[] nums = {5, 2, 3, 1};
+        int[] nums = {3, 2, 1, 5, 6, 4};
+        int k = 2;
 
-        // 归并排序
         Solution01 solution01 = new Solution01();
-        int[] sortArray01 = solution01.sortArray(nums);
-        Arrays.stream(sortArray01).forEach(System.out::print);
-        System.out.println("\n");
+        System.out.println(solution01.findKthLargest(nums, k));
 
-        // 快速排序
         Solution02 solution02 = new Solution02();
-        int[] sortArray02 = solution02.sortArray(nums);
-        Arrays.stream(sortArray02).forEach(System.out::print);
-        System.out.println("\n");
+        System.out.println(solution02.findKthLargest(nums, k));
 
     }
 
     /**
-     * 解法一：归并排序
+     * 解法一： 二叉堆（优先队列,小顶堆）
      */
     private static class Solution01 {
 
-        /**
-         * 临时辅助数组
-         */
-        int[] tmp;
+        public int findKthLargest(int[] nums, int k) {
 
-        public int[] sortArray(int[] nums) {
-            tmp = new int[nums.length];
-            mergeSort(nums, 0, nums.length - 1);
-            return nums;
-        }
-
-        /**
-         * 定义mergeSort(nums,l,r) 函数表示对 nums 数组里[l, r]的部分进行排序，整个函数流程如下：
-         */
-        private void mergeSort(int[] nums, int left, int right) {
-            if (left >= right) {
-                return;
-            }
-            int mid = (left + right) / 2;
-            mergeSort(nums, left, mid);
-            mergeSort(nums, mid + 1, right);
-            int i = left, j = mid + 1;
-            int cnt = 0;
-            while (i <= mid && j <= right) {
-                if (nums[i] <= nums[j]) {
-                    tmp[cnt++] = nums[i++];
-                } else {
-                    tmp[cnt++] = nums[j++];
+            // 小顶堆，堆顶是最小元素
+            PriorityQueue<Integer> pq = new PriorityQueue<>();
+            for (int e : nums) {
+                // 每个元素都要过一遍二叉堆
+                pq.offer(e);
+                // 堆中元素多于 k 个时，删除堆顶元素
+                if (pq.size() > k) {
+                    pq.poll();
                 }
             }
-            while (i <= mid) {
-                tmp[cnt++] = nums[i++];
-            }
-            while (j <= right) {
-                tmp[cnt++] = nums[j++];
-            }
-            for (int k = 0; k < right - left + 1; ++k) {
-                nums[k + left] = tmp[k];
-            }
+            // pq 中剩下的是 nums 中 k 个最大元素，
+            // 堆顶是最小的那个，即第 k 个最大元素
+            return pq.peek();
         }
 
     }
 
     /**
-     * 解法二：快速排序
+     * 解法二：快速选择算法(快速排序的变体),更优
      */
     private static class Solution02 {
 
-        public int[] sortArray(int[] nums) {
-
-            // 为了避免出现耗时的极端情况，先随机打乱
+        public int findKthLargest(int[] nums, int k) {
+            // 首先随机打乱数组
             shuffle(nums);
-
-            // 排序整个数组（原地修改）
-            quickSort(nums, 0, nums.length - 1);
-            return nums;
-        }
-
-        /**
-         * 快排算法
-         */
-        private void quickSort(int[] nums, int low, int high) {
-            if (low >= high) {
-                return;
+            int low = 0, high = nums.length - 1;
+            // 转化成「排名第 k 的元素」
+            // 现在 k 表示 第 k 大的元素的下标
+            k = nums.length - k;
+            while (low <= high) {
+                int pivot = partition(nums, low, high);
+                if (pivot < k) {
+                    // 第 k 大的元素在 nums[p+1..hi] 中
+                    low = pivot + 1;
+                } else if (pivot > k) {
+                    // 第 k 大的元素在 nums[lo..p-1] 中
+                    high = pivot - 1;
+                } else {
+                    // 找到第 k 大的元素
+                    return nums[pivot];
+                }
             }
-            // 对 nums[low..high] 进行切分
-            // 使得 nums[low..pivot-1] <= nums[pivot] < nums[pivot+1..high]
-            // pivot 为每次确定那个元素的最终下标
-            int pivot = partition(nums, low, high);
 
-            quickSort(nums, low, pivot - 1);
-            quickSort(nums, pivot + 1, high);
+            return -1;
         }
 
         /**
