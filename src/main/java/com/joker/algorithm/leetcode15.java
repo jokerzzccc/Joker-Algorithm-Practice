@@ -12,7 +12,7 @@ import java.util.List;
  * @author admin
  * @date 2023/6/25
  */
-public class leetcode35 {
+public class leetcode15 {
 
     public static void main(String[] args) {
         int[] nums = {-1,0,1,2,-1,-4};
