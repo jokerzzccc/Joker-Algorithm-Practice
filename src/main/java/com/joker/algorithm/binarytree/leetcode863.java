@@ -51,8 +51,10 @@ public class leetcode863 {
             // 从 root 出发 DFS，记录每个结点的父结点
             findParents(root);
 
-            // 从 target 出发 DFS，寻找所有深度为 k 的结点（左右儿子 + 父节点）
+            // 从 target 出发 DFS，寻找所有深度为 k 的结点（左右儿子 + 父结点）
+            // from 是为了避免重复搜索，因为有父结点搜索这个方向
             findAns(target, null, 0, k);
+
 
             return ans;
         }
