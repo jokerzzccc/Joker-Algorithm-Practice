@@ -1,4 +1,4 @@
-package com.joker.algorithm;
+package com.joker.algorithm.dp;
 
 /**
  * <p>
