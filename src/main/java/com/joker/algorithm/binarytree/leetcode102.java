@@ -44,7 +44,7 @@ public class leetcode102 {
             // 初始化，加入 root，第一层
             queue.offer(root);
 
-            // while 是横向，for 是纵向
+            // while 是纵向，for 是横向
             while (!queue.isEmpty()) {
                 List<Integer> level = new ArrayList<>();
 
