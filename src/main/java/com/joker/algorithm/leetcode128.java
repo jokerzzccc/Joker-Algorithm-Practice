@@ -59,30 +59,6 @@ public class leetcode128 {
             return longest;
         }
 
-        public int longestConsecutive2(int[] nums) {
-            HashMap<Integer, Integer> pointToLongest = new HashMap<>();
-
-            // 最长连续子序列的长度
-            int longest = 0;
-            for (Integer num : nums) {
-                // 因为，如果 num 存在前驱 num - 1, 则肯定会在 num - 1 开始计算，而不会在 num 计算，
-                // 所以可以直接跳过
-                if (!pointToLongest.containsKey(num)) {
-                    int left = pointToLongest.getOrDefault(num - 1, 0);
-                    int right = pointToLongest.getOrDefault(num + 1, 0);
-                    int curLen = 1 + left + right;
-
-                    longest = Math.max(longest, curLen);
-
-                    pointToLongest.put(num, curLen);
-                    pointToLongest.put(num - left, curLen);
-                    pointToLongest.put(num + right, curLen);
-                }
-            }
-
-            return longest;
-        }
-
     }
 
     /**
