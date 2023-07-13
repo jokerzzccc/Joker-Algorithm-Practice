@@ -25,7 +25,7 @@ public class leetcode438 {
     }
 
     /**
-     * 解法一：
+     * 解法一：滑动窗口
      */
     private static class Solution01 {
 
