@@ -1,4 +1,4 @@
-package com.joker.algorithm.dp;
+package com.joker.algorithm;
 
 import java.util.HashMap;
 
