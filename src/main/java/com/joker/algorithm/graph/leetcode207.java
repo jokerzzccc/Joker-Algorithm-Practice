@@ -1,8 +1,6 @@
 package com.joker.algorithm.graph;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * <p>
@@ -25,6 +23,9 @@ public class leetcode207 {
         Solution02 solution02 = new Solution02();
         boolean canFinish02 = solution02.canFinish(numCourses, prerequisites);
         System.out.println(canFinish02);
+
+        Solution03 solution03 = new Solution03();
+        System.out.println(solution03.canFinish(numCourses, prerequisites));
 
     }
 
@@ -175,6 +176,87 @@ public class leetcode207 {
                 graph[from].add(to);
             }
             return graph;
+        }
+
+    }
+
+    /**
+     * 解法三：BFS
+     * 寻找拓扑排序：BFS 结束时，如果仍有课的入度不为 0，无法被选，完成不了所有课。
+     * 否则，能找到一种顺序把所有课上完。
+     */
+    private static class Solution03 {
+
+        /**
+         * 存储每个节点的入度
+         * K-课程号，V-入度
+         */
+        private Map<Integer, Integer> inDegree = new HashMap<>();
+
+        /**
+         * 邻接表：
+         * K-当前课程，V-依赖当前课程的后续课程（K 的后继节点链表）
+         */
+        private Map<Integer, List<Integer>> adj = new HashMap<>();
+
+        public boolean canFinish(int numCourses, int[][] prerequisites) {
+            for (int i = 0; i < numCourses; i++) {
+                inDegree.put(i, 0);
+            }
+
+            // 1. 初始化入度，和依赖关系(邻接表)
+            for (int[] relation : prerequisites) {
+                // EG: (3,0), 0->3, 想学3号课程要先完成0号课程, 更新3号课程的入度和0号课程的依赖(邻接表)
+                int cur = relation[1];
+                int next = relation[0];
+
+                // 1.1 更新入度
+                inDegree.put(next, inDegree.getOrDefault(next, 0) + 1);
+
+                // 1.2 更新当前节点的邻接表
+                if (!adj.containsKey(cur)) {
+                    adj.put(cur, new ArrayList<>());
+                }
+                adj.get(cur).add(next);
+
+            }
+
+            // 2. BFS,
+            // 将入度为0的课程放入队列, 队列中的课程就是没有先修, 可以学的课程
+            Queue<Integer> queue = new LinkedList<>();
+            for (int key : inDegree.keySet()) {
+                if (inDegree.get(key) == 0) {
+                    queue.offer(key);
+                }
+            }
+
+            // 取出一个节点, 对应学习这门课程.
+            // 遍历当前邻接表, 更新其入度; 更新之后查看入度, 如果为0, 加入到队列
+            while (!queue.isEmpty()) {
+                int cur = queue.poll();
+                // 遍历当前课程的邻接表, 更新后继节点的入度
+                if (!adj.containsKey(cur)) {
+                    continue;
+                }
+                List<Integer> successorList = adj.get(cur);
+                for (int s : successorList) {
+                    inDegree.put(s, inDegree.get(s) - 1);
+                    // 入度为 0 时，加入队列
+                    if (inDegree.get(s) == 0) {
+                        queue.offer(s);
+                    }
+                }
+            }
+
+            // 3. 判断结果：是否可以找到一个拓扑排序；
+            // BFS 结束时，如果仍有课的入度不为 0，无法被选，完成不了所有课
+            for (Integer node : inDegree.keySet()) {
+                if (inDegree.get(node) != 0) {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
     }
