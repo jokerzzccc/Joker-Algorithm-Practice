@@ -1,5 +1,7 @@
 package com.joker.algorithm.dp;
 
+import java.util.Arrays;
+
 /**
  * <p>
  * 打家劫舍 IV
@@ -19,15 +21,14 @@ public class leetcode2560 {
     }
 
     /**
-     * 解法一：二分 + DP
+     * 解法一：二分 + 动态规划
      * 最小化最大值
      */
     private static class Solution01 {
         public int minCapability(int[] nums, int k) {
-            int left = 0, right = 0;
-            for (int num : nums) {
-                right = Math.max(right, num);
-            }
+            int left = 0;
+            int right = Arrays.stream(nums)
+                    .max().getAsInt();
             // 二分查找，
             // 开区间：(left, right)
             while (left + 1 < right) {
@@ -52,6 +53,7 @@ public class leetcode2560 {
         private boolean check(int[] nums, int k, int midNum) {
             int f1 = 0, f2 = 0;
             for (int num : nums) {
+                // 做选择：不偷与偷
                 // 当前的金额超过了小偷的能力，则不能窃取
                 if (num > midNum) {
                     f1 = f2;

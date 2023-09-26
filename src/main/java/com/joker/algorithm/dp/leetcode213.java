@@ -1,7 +1,5 @@
 package com.joker.algorithm.dp;
 
-import java.util.Arrays;
-
 /**
  * <p>
  * 打家劫舍 II
