@@ -58,7 +58,7 @@ import java.util.Scanner;
  * <p>
  * <p>
  * 题型分析：
- * 多叉树 + 递归 + 回溯
+ * 多叉树 + 递归(后续位置，访问子节点的内容) + 回溯
  *
  * @author jokerzzccc
  * @date 2025/3/11
