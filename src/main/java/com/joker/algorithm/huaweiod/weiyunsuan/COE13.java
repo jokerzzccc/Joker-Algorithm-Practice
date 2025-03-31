@@ -1,4 +1,4 @@
-package com.joker.algorithm.huaweiod.shujujiegou;
+package com.joker.algorithm.huaweiod.weiyunsuan;
 
 import java.util.Arrays;
 import java.util.Scanner;
