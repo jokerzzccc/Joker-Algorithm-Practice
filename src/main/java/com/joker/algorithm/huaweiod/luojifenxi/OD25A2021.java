@@ -66,7 +66,7 @@ public class OD25A2021 {
                     queue.add(curr);
                     break;
                 } else if (end2 <= end1) {
-                    // 当前范围被前一个完全包含，不操作
+                    // 当前范围被队列里面的完全包含，不操作
                     break;
                 } else if (start2 <= start1) {
                     // 当前范围起点在队列尾部前，调整队列尾部
