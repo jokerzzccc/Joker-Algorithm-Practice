@@ -31,6 +31,7 @@ public class leetcode870 {
             int n = nums1.length;
             // 给 nums2 降序排序 的优先级队列
             PriorityQueue<int[]> maxpq = new PriorityQueue<>((int[] pair1, int[] pair2) -> pair2[1] - pair1[1]);
+
             for (int i = 0; i < n; i++) {
                 maxpq.offer(new int[]{i, nums2[i]});
             }

@@ -1,6 +1,7 @@
 package com.joker.algorithm;
 
 import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * 无重复字符的最长子串
@@ -34,13 +35,13 @@ public class LCRO16 {
 
             int left = 0;
             int maxSubLen = 0;
-            LinkedList<Character> queue = new LinkedList<>();
+            Queue<Character> queue = new LinkedList<>();
             queue.add(s.charAt(left));
 
             for (int right = 1; right < s.length(); right++) {
                 char curr = s.charAt(right);
                 while (queue.contains(curr)) {
-                    queue.remove((Object) s.charAt(left));
+                    queue.remove(s.charAt(left));
                     left++;
                 }
 

@@ -1,7 +1,5 @@
 package com.joker.algorithm.chain;
 
-import com.joker.algorithm.chain.ListNode;
-
 /**
  * <p>
  * 分割链表
@@ -43,21 +41,21 @@ public class leetcode86 {
             // prev1, prev2 指针负责生成结果链表
             ListNode prev1 = dummy1, prev2 = dummy2;
 
-            // prev 负责遍历原链表，类似合并两个有序链表的逻辑
+            // curr 负责遍历原链表，类似合并两个有序链表的逻辑
             // 这里是将一个链表分解成两个链表
-            ListNode prev = head;
-            while (prev != null) {
-                if (prev.val >= x) {
-                    prev2.next = prev;
+            ListNode curr = head;
+            while (curr != null) {
+                if (curr.val >= x) {
+                    prev2.next = curr;
                     prev2 = prev2.next;
                 } else {
-                    prev1.next = prev;
+                    prev1.next = curr;
                     prev1 = prev1.next;
                 }
                 // 断开原链表中的每个节点的 next 指针
-                ListNode temp = prev.next;
-                prev.next = null;
-                prev = temp;
+                ListNode temp = curr.next;
+                curr.next = null;
+                curr = temp;
             }
 
             // 连接两个链表

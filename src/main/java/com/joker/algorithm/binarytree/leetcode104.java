@@ -1,5 +1,7 @@
 package com.joker.algorithm.binarytree;
 
+import java.util.concurrent.PriorityBlockingQueue;
+
 /**
  * <p>
  * 二叉树的最大深度
@@ -11,6 +13,9 @@ package com.joker.algorithm.binarytree;
 public class leetcode104 {
 
     public static void main(String[] args) {
+
+        PriorityBlockingQueue<Object> objects = new PriorityBlockingQueue<>();
+        objects.add(1);
         TreeNode root = new TreeNode(3);
         root.left = new TreeNode(9);
         root.right = new TreeNode(20);

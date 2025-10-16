@@ -1,7 +1,5 @@
 package com.joker.algorithm.chain;
 
-import com.joker.algorithm.chain.ListNode;
-
 /**
  * <p>
  * 反转链表&反转链表II

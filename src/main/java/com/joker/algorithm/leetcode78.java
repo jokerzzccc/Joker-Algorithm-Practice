@@ -19,12 +19,12 @@ public class leetcode78 {
         List<List<Integer>> subsets;
 
         // 法一
-//        Solution solution = new Solution();
-//        subsets = solution.subsets(nums);
+       Solution solution = new Solution();
+       subsets = solution.subsets(nums);
 
         // 法二
-        Solution02 solution02 = new Solution02();
-        subsets = solution02.subsets(nums);
+        // Solution02 solution02 = new Solution02();
+        // subsets = solution02.subsets(nums);
 
         System.out.println(subsets);
 

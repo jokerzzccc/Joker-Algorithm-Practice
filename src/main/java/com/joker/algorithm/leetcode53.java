@@ -21,6 +21,33 @@ public class leetcode53 {
         int maxSubArraySum02 = solution02.maxSubArray(nums);
         System.out.println(maxSubArraySum02);
 
+        Solution03 solution03 = new Solution03();
+        int maxSubArraySum03 = solution03.maxSubArray(nums);
+        System.out.println(maxSubArraySum03);
+
+    }
+
+    /**
+     * 解法三：使用【滚动变量】优化动态规划
+     */
+    private static class Solution03 {
+
+        public int maxSubArray(int[] nums) {
+            if (nums.length == 0) {
+                return 0;
+            }
+
+            int pre = 0;
+            int res = nums[0];
+
+            for (int num : nums) {
+                pre = Math.max(num, pre + num);
+                res = Math.max(pre, res);
+            }
+
+            return res;
+        }
+
     }
 
     /**
@@ -59,10 +86,10 @@ public class leetcode53 {
          */
         private Status getInfo(int[] nums, int left, int right) {
             if (left == right) {
-                return new Status(nums[left], nums[left], nums[left],nums[left] );
+                return new Status(nums[left], nums[left], nums[left], nums[left]);
             }
             int middle = (left + right) / 2;
-            Status leftSub = getInfo(nums,left, middle);
+            Status leftSub = getInfo(nums, left, middle);
             Status rightSub = getInfo(nums, middle + 1, right);
             return pushUp(leftSub, rightSub);
 

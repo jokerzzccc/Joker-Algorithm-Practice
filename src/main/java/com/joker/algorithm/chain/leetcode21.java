@@ -1,7 +1,5 @@
 package com.joker.algorithm.chain;
 
-import com.joker.algorithm.chain.ListNode;
-
 /**
  * <p>
  * 合并两个有序链表
