@@ -1,5 +1,6 @@
 package com.joker.algorithm.huaweiod.jokerzhenti;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -32,10 +33,6 @@ import java.util.Scanner;
  * <p>
  * 提示：
  * 3分钱的硬币组合可以是(1,1,1)，(1,2)，(3)，所以是三种
- * ---------------
- * 解题思路：
- * 完全背包问题-动态规划
- * 类似 leetcode-518 零钱兑换II
  *
  * @author jokerzzccc
  * @date 2025/10/31
@@ -64,10 +61,9 @@ public class JokerReal04 {
         for (int i = 0; i < n; i++) {
             resChangeList.addLast(0);
         }
-        // DFS 处理
+        // 回溯 处理
         for (int i = 0; i < n; i++) {
-            int path = coinChange(inputNumList.get(i));
-            resChangeList.set(i, path);
+            coinChange(inputNumList.get(i), i, 0, resChangeList);
         }
 
         // 结果处理
@@ -76,30 +72,21 @@ public class JokerReal04 {
         }
     }
 
-    private static int coinChange(int target) {
-        // dp 定义：若只使用 `coins` 中的前 `i` 个（`i` 从 1 开始计数）硬币的面值，若想凑出金额 `j`，有 `dp[i][j]` 种凑法
-        int n = initCoinList.length;
-        int[][] dp = new int[n + 1][target + 1];
-        // base case
-        // 总金额为 0 时，不放进去就是一种方法
-        for (int i = 0; i <= 3; i++) {
-            dp[i][0] = 1;
+
+    private static void coinChange(int target, int targetIndex, int coinIndexStart, List<Integer> resPathList) {
+        if (target < 0) {
+            return;
         }
-
-        for (int i = 1; i <= n; i++) {
-            for (int j = 1; j <= target; j++) {
-                if (j - initCoinList[i - 1] >= 0) {
-                    // 两种选择，将第 i 个 coin 不放进背包，或放进背包
-                    dp[i][j] = dp[i - 1][j] + dp[i][j - initCoinList[i - 1]];
-                } else {
-                    // 不放进背包，因为放不进去
-                    dp[i][j] = dp[i - 1][j];
-                }
-            }
+        if (target == 0) {
+            resPathList.set(targetIndex, resPathList.get(targetIndex) + 1);
+            return;
         }
-
-        return dp[n][target];
-
+        for (int i = coinIndexStart; i < 3; i++) {
+            int next = target - initCoinList[i];
+            coinChange(next, targetIndex, i, resPathList);
+        }
     }
 
 }
+
+
