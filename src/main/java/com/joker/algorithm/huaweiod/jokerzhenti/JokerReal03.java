@@ -32,7 +32,7 @@ import java.util.Scanner;
  *
  * ---------------------
  * 类似 [leetcode-45 跳跃游戏II](https://leetcode.cn/problems/jump-game-ii/description/)
- * 题解四路：
+ * 题解思路：
  * 贪心
  *
  * @author jokerzzccc
